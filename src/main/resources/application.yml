@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: skillbox-task-tracker
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      password: secret
+      username: root
+      database: tracker
