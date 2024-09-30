@@ -36,20 +36,19 @@ public class TaskService {
         return taskRepository.findById(id).switchIfEmpty(Mono.error(new NotFoundException("Task with id %s not found".formatted(id))));
     }
 
-    public Mono<Task> create(TaskRequest taskRequest) {
+    public Mono<Task> create(TaskRequest taskRequest, User user) {
         Instant now = Instant.now();
-        Task task = taskMapper.toEntity(taskRequest, now, now);
+        Task task = taskMapper.toEntity(taskRequest, now, now, user);
         return populateTask(task).flatMap(taskRepository::save);
     }
 
     public Mono<Task> update(String id, TaskRequest taskRequest) {
-        Task task = taskMapper.toEntity(taskRequest, null, Instant.now());
+        Task task = taskMapper.toEntity(taskRequest, null, Instant.now(), null);
         return findByIdWithoutPopulate(id)
                 .map(taskForUpdate -> {
                     taskForUpdate.setName(task.getName());
                     taskForUpdate.setDescription(task.getDescription());
                     taskForUpdate.setStatus(task.getStatus());
-                    taskForUpdate.setAuthorId(task.getAuthorId());
                     taskForUpdate.setAssigneeId(task.getAssigneeId());
                     taskForUpdate.setObserverIds(task.getObserverIds());
                     taskForUpdate.setUpdatedAt(task.getUpdatedAt());

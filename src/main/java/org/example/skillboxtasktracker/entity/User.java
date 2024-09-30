@@ -4,8 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Document(collection = "users")
 @Getter
@@ -15,7 +18,10 @@ public class User {
     private String id;
     private String username;
     private String email;
-
+    private String password;
+    @Field("roles")
+    private Set<RoleType> roles = new HashSet<>();
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

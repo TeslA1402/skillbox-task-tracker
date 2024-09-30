@@ -14,8 +14,6 @@ public record TaskRequest(
         @NotNull
         TaskStatus status,
         @NotBlank
-        String authorId,
-        @NotBlank
         String assigneeId,
         Set<@NotBlank String> observerIds
 ) {

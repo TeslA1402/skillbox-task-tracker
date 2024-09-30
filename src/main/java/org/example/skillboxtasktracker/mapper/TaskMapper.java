@@ -3,6 +3,7 @@ package org.example.skillboxtasktracker.mapper;
 import org.example.skillboxtasktracker.controller.request.TaskRequest;
 import org.example.skillboxtasktracker.controller.response.TaskResponse;
 import org.example.skillboxtasktracker.entity.Task;
+import org.example.skillboxtasktracker.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -14,7 +15,8 @@ public interface TaskMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "author", ignore = true)
     @Mapping(target = "assignee", ignore = true)
-    Task toEntity(TaskRequest taskRequest, Instant createdAt, Instant updatedAt);
+    @Mapping(target = "authorId", source = "user.id")
+    Task toEntity(TaskRequest taskRequest, Instant createdAt, Instant updatedAt, User user);
 
     TaskResponse toResponse(Task task);
 }

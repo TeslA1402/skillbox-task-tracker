@@ -9,7 +9,8 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface UserMapper {
     @Mapping(target = "id", ignore = true)
-    User toEntity(UserRequest userRequest);
+    @Mapping(target = "password", source = "password")
+    User toEntity(UserRequest userRequest, String password);
 
     UserResponse toResponse(User user);
 }
